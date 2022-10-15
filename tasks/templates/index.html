@@ -1,0 +1,27 @@
+<h1>Welcome mate</h1>
+
+{% if user.is_authenticated %}
+<a href="{% url 'logout_user' %}">
+    <h3>
+        Log out
+    </h3>
+</a>
+<a href="{% url 'tasksKanban' %}">
+    <h3>
+        Tasks
+    </h3>
+</a>
+
+{% else %}
+<a href="{% url 'register_user' %}">
+    <h3>
+        Register
+    </h3>
+</a>
+
+<a href="{% url 'login_user' %}">
+    <h3>
+        Login
+    </h3>
+</a>
+{% endif %}

@@ -1,0 +1,50 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+<div class="container">
+    <div class="row">
+      <div class="col-xs">
+        <a href="{% url 'addTask' %}">
+          <button>
+            Add task
+          </button>
+        </a>
+      </div>
+      <div class="col-sm">
+        To do
+        {% for task in toDoTasks %}
+        <div style="border: 1px solid black">
+            <h5>{{ task.name }}</h5>
+            <p>{{ task.shortDescription }}</p>
+            <a href="{% url 'taskDetail' task.id %}">
+              Show details
+            </a>
+        </div>
+        {% endfor %}
+      </div>
+      <div class="col-sm">
+        In proccess
+        {% for task in inProgressTasks %}
+        <div style="border: 1px solid black">
+            <h5>{{ task.name }}</h5>
+            <p>{{ task.shortDescription }}</p>
+            <a href="{% url 'taskDetail' task.id %}">
+              Show details
+            </a>
+        </div>
+        {% endfor %}
+      </div>
+      <div class="col-sm">
+        Done
+        {% for task in doneTasks %}
+        <div style="border: 1px solid black">
+            <h5>{{ task.name }}</h5>
+            <p>{{ task.shortDescription }}</p>
+            <a href="{% url 'taskDetail' task.id %}">
+              Show details
+            </a>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
