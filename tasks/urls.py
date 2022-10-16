@@ -9,4 +9,8 @@ urlpatterns = [
     path('tasksList/addTaskExecute', views.addTaskExecute, name='addTaskExecute'),
 
     path('tasksList/taskDetail/<int:taskId>/', views.taskDetail, name='taskDetail'),
+
+    path('taskList/taskDetail/<int:taskId>/taskStateChange/', views.taskStateChange, name='taskStateChange'),
+
+    path('taskList/taskDetail/<int:taskId>/deleteTask/', views.deleteTask, name='deleteTask'),
 ]

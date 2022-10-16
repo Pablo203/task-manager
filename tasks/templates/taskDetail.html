@@ -21,3 +21,17 @@
 <p>
     {{ task.priority }}
 </p>
+<a href="{% url 'taskStateChange' task.id %}">
+{% if task.state == 'toDo' %}
+    <h2>
+        Mark as In Progress
+    </h2>
+{% elif task.state == 'inProgress' %}
+    <h2>
+        Mark as Done
+    </h2>
+{% endif %}
+
+<a href="{% url 'deleteTask'  task.id %}">
+    Delete task
+</a>

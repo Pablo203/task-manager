@@ -1,7 +1,6 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
-from django.shortcuts import get_object_or_404
-from django.urls import is_valid_path
+from django.urls import reverse
 from .models import Task
 from .forms import TaskCreateForm
 
@@ -43,3 +42,18 @@ def addTaskExecute(request):
 def addTask(request):
     form = TaskCreateForm()
     return render(request, 'addTaskForm.html', {'form': form})
+
+def deleteTask(request, taskId):
+    task = Task.objects.get(id=taskId)
+    task.delete()
+    return HttpResponseRedirect(reverse('tasksKanban'))
+
+def taskStateChange(request, taskId):
+    task = Task.objects.get(id=taskId)
+    if task.state == 'toDo':
+        task.state = 'inProgress'
+    elif task.state == 'inProgress':
+        task.state = 'done'
+    task.save()
+
+    return HttpResponseRedirect(reverse('tasksKanban'))
