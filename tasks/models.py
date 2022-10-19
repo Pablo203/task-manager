@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 
 # Create your models here.
 class Task(models.Model):
@@ -11,6 +12,12 @@ class Task(models.Model):
     stateOptions = models.TextChoices('state', 'toDo inProgress done')
     state = models.CharField(blank=True, max_length=10, choices=stateOptions.choices)
     priority = models.IntegerField()
+
+    createdBy = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        default=1
+    )
 
     def __str__(self):
         return self.name

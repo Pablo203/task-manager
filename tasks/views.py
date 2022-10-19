@@ -25,15 +25,18 @@ def addTaskExecute(request):
         form = TaskCreateForm(request.POST)
 
         if form.is_valid():
+            currentUser = request.user
+            #currentUserId = currentUser.id
             task = Task(
                 name=form.cleaned_data['name'], shortDescription=form.cleaned_data['shortDescription'], 
                 longDescription=form.cleaned_data['longDescription'], 
                 category=form.cleaned_data['category'],
                 state=form.cleaned_data['state'],
                 priority=form.cleaned_data['priority'],
+                createdBy=currentUser
                 )
             task.save()
-            return HttpResponse("FORM WORKS")
+            return HttpResponseRedirect(reverse('tasksKanban'))
     else:
         form = TaskCreateForm()
     
