@@ -1,17 +1,21 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-from .models import Task
-from .forms import TaskCreateForm
+from ..models import Task
+from ..forms import TaskCreateForm
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import status
 
 # Create your views here.
 def mainPage(request):
     return render(request, 'index.html', {})
 
-def tasksKanban(request):   
-    toDoTasks = Task.objects.filter(state="toDo").order_by("-priority")
-    inProgressTasks = Task.objects.filter(state="inProgress").order_by("-priority")
-    doneTasks = Task.objects.filter(state="done").order_by("-priority")
+def tasksKanban(request):
+    currentUser = request.user
+    toDoTasks = Task.objects.filter(state="toDo", createdBy=currentUser).order_by("-priority")
+    inProgressTasks = Task.objects.filter(state="inProgress", createdBy=currentUser).order_by("-priority")
+    doneTasks = Task.objects.filter(state="done", createdBy=currentUser).order_by("-priority")
 
 
     return render(request, 'tasks.html', {'toDoTasks': toDoTasks, 'inProgressTasks': inProgressTasks, 'doneTasks': doneTasks})
@@ -60,3 +64,5 @@ def taskStateChange(request, taskId):
     task.save()
 
     return HttpResponseRedirect(reverse('tasksKanban'))
+
+
