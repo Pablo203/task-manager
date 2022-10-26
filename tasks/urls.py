@@ -2,6 +2,7 @@ from django.urls import path
 #from . import views 
 from .views import views
 from .views import apiViews
+from .views import filesViews
 
 
 urlpatterns = [
@@ -17,4 +18,6 @@ urlpatterns = [
     path('taskList/taskDetail/<int:taskId>/deleteTask/', views.deleteTask, name='deleteTask'),
 
     path('tasksList/getTasks/', apiViews.getAll, name='getTasks'),
+
+    path('tasksList/taskDetail/<int:taskId>/upload/', filesViews.uploadFile, name='uploadFile')
 ]

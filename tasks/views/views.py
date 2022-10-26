@@ -2,7 +2,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from ..models import Task
-from ..forms import TaskCreateForm
+from ..forms import TaskCreateForm, UploadFileForm
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
@@ -22,7 +22,8 @@ def tasksKanban(request):
 
 def taskDetail(request, taskId):
     task = Task.objects.get(id=taskId)
-    return render(request, 'taskDetail.html', {'task': task})
+    form = UploadFileForm()
+    return render(request, 'taskDetail.html', {'task': task, 'form': form})
 
 def addTaskExecute(request):
     if request.method == "POST":
@@ -64,5 +65,4 @@ def taskStateChange(request, taskId):
     task.save()
 
     return HttpResponseRedirect(reverse('tasksKanban'))
-
 

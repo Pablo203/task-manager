@@ -15,3 +15,7 @@ class TaskCreateForm(forms.Form):
     state = forms.CharField(widget=forms.Select(choices=CHOICES))
     # state = forms.CharField()
     priority = forms.IntegerField()
+
+class UploadFileForm(forms.Form):
+    title = forms.CharField(max_length=100)
+    file = forms.FileField()

@@ -1,0 +1,24 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+<h1>Upload</h1>
+
+{% block content %}
+{% if form.errors %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        There was an error with your code...
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">X</button>
+    </div>
+        
+{% endif %}
+
+<form action="{% url 'uploadFile' %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <form>
+        {{ form.as_p }}
+        <br>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+
+</form>
+{% endblock %}

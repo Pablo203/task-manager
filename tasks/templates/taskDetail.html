@@ -1,37 +1,83 @@
-<h3>
-    {{ task.name }}
-</h3>
-
-<h5>
-    {{ task.shortDescription }}
-</h5>
-
-<p>
-    {{ task.longDescription }}
-</p>
-
-<p>
-    {{ task.category }}
-</p>
-
-<p>
-    {{ task.state }}
-</p>
-
-<p>
-    {{ task.priority }}
-</p>
-<a href="{% url 'taskStateChange' task.id %}">
-{% if task.state == 'toDo' %}
-    <h2>
-        Mark as In Progress
-    </h2>
-{% elif task.state == 'inProgress' %}
-    <h2>
-        Mark as Done
-    </h2>
-{% endif %}
-
-<a href="{% url 'deleteTask'  task.id %}">
-    Delete task
-</a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'tasks/main.css' %}">
+    <title>{{ task.name }}</title>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-4 grey">
+                <h3>
+                    {{ task.name }}
+                </h3>
+                
+                <h5>
+                    {{ task.shortDescription }}
+                </h5>
+                
+                <p>
+                    {{ task.longDescription }}
+                </p>
+                
+                <p>
+                    {{ task.category }}
+                </p>
+                
+                <p>
+                    {{ task.state }}
+                </p>
+                
+                <p>
+                    {{ task.priority }}
+                </p>
+            </div>
+            <div class="col-4">
+                <a href="{% url 'taskStateChange' task.id %}">
+                    {% if task.state == 'toDo' %}
+                        <h2>
+                            Mark as In Progress
+                        </h2>
+                    {% elif task.state == 'inProgress' %}
+                        <h2>
+                            Mark as Done
+                        </h2>
+                    {% endif %}
+                    
+                    <a href="{% url 'deleteTask'  task.id %}">
+                        Delete task
+                    </a>
+            </div>
+        </div>
+    </div>
+    
+    
+    
+    <h1>Upload</h1>
+    
+    {% block content %}
+    {% if form.errors %}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            There was an error with your code...
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">X</button>
+        </div>
+            
+    {% endif %}
+    
+    <form action="{% url 'uploadFile' task.id %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <form>
+            {{ form.as_p }}
+            <br>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+    
+    </form>
+    {% endblock %}
+</body>
+</html>
