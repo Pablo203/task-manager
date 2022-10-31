@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect 
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse
+from .forms import RegistrationUserForm
 
 # Create your views here.
 def login_user(request):
@@ -24,11 +25,11 @@ def login_user(request):
 def logout_user(request):
     logout(request)
     messages.success(request, ("You were logged out"))
-    return HttpResponseRedirect(reverse("usersAuth:login_user"))
+    return HttpResponseRedirect(reverse("login_user"))
 
 def register_user(request):
     if request.method == "POST":
-        form = UserCreationForm(request.POST)
+        form = RegistrationUserForm(request.POST)
         if form.is_valid():
             form.save()
             username = form.cleaned_data['username']
@@ -39,7 +40,7 @@ def register_user(request):
             messages.success(request, ("Registration successful"))
             return redirect('index')
     else:
-        form = UserCreationForm()
+        form = RegistrationUserForm()
 
 
     return render(request, 'authenticate/register_user.html', {

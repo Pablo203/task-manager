@@ -6,25 +6,28 @@ from ..forms import TaskCreateForm, UploadFileForm
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
+from django.contrib.auth.decorators import login_required
+
 
 # Create your views here.
 def mainPage(request):
     return render(request, 'index.html', {})
 
+@login_required
 def tasksKanban(request):
     currentUser = request.user
     toDoTasks = Task.objects.filter(state="toDo", createdBy=currentUser).order_by("-priority")
     inProgressTasks = Task.objects.filter(state="inProgress", createdBy=currentUser).order_by("-priority")
     doneTasks = Task.objects.filter(state="done", createdBy=currentUser).order_by("-priority")
-
-
     return render(request, 'tasks.html', {'toDoTasks': toDoTasks, 'inProgressTasks': inProgressTasks, 'doneTasks': doneTasks})
 
+@login_required
 def taskDetail(request, taskId):
     task = Task.objects.get(id=taskId)
     form = UploadFileForm()
     return render(request, 'taskDetail.html', {'task': task, 'form': form})
 
+@login_required
 def addTaskExecute(request):
     if request.method == "POST":
         form = TaskCreateForm(request.POST)
