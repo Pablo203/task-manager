@@ -1,7 +1,21 @@
+from email.policy import default
+from unittest.util import _MAX_LENGTH
 from django.db import models
 from django.conf import settings
 
 # Create your models here.
+
+class Project(models.Model):
+    name = models.CharField(max_length=100, default='')
+    createdBy = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        default=1
+    )
+
+    def __str__(self):
+        return self.name
+
 class Task(models.Model):
     name = models.CharField(max_length=100)
     shortDescription = models.CharField(max_length=100)
@@ -21,5 +35,8 @@ class Task(models.Model):
 
     filePath = models.CharField(max_length=500, default='')
 
+    projectName = models.ForeignKey(Project, on_delete=models.CASCADE)
+
     def __str__(self):
         return self.name
+

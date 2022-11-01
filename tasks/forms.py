@@ -13,8 +13,8 @@ class TaskCreateForm(forms.Form):
     ('done', 'Done'),
     )
     state = forms.CharField(widget=forms.Select(choices=CHOICES))
-    # state = forms.CharField()
     priority = forms.IntegerField()
+    projectName = forms.CharField()
 
 class UploadFileForm(forms.Form):
     title = forms.CharField(max_length=100)

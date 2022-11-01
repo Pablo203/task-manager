@@ -41,7 +41,8 @@ def addTaskExecute(request):
                 category=form.cleaned_data['category'],
                 state=form.cleaned_data['state'],
                 priority=form.cleaned_data['priority'],
-                createdBy=currentUser
+                createdBy=currentUser,
+                projectName=form.cleaned_data['projectName']
                 )
             task.save()
             return HttpResponseRedirect(reverse('tasksKanban'))
