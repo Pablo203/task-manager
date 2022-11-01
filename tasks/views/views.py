@@ -1,7 +1,7 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-from ..models import Task, Project
+from ..models import Task, Project, File
 from ..forms import TaskCreateForm, UploadFileForm
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -30,8 +30,9 @@ def taskDetail(request, projectId, taskId):
     projects = Project.objects.filter(createdBy=request.user)
     
     task = Task.objects.get(id=taskId)
+    files = File.objects.filter(originTask=taskId)
     form = UploadFileForm()
-    return render(request, 'taskDetail.html', {'task': task, 'form': form, 'projectId': projectId, 'projects' : projects})
+    return render(request, 'taskDetail.html', {'task': task, 'form': form, 'projectId': projectId, 'projects' : projects, 'files': files})
 
 @login_required
 def addTaskExecute(request, projectId):

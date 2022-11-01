@@ -84,34 +84,52 @@
     </nav>
 
 
-    <div class="container-fluid">
+    <div class="container-fluid p-5">
         <div class="row justify-content-center">
-            <div class="col-4 grey">
-                <h3>
+            <div class="col-3 grey">
+                <h2>
                     {{ task.name }}
-                </h3>
+                </h2>
                 
-                <h5>
-                    {{ task.shortDescription }}
-                </h5>
+                <span class="d-block">
+                    <p class="d-inline fw-bold">Short description: </p>
+                    <p class="d-inline">{{ task.shortDescription }}</p>
+                </span>
                 
-                <p>
-                    {{ task.longDescription }}
-                </p>
-                
-                <p>
-                    {{ task.category }}
-                </p>
-                
-                <p>
-                    {{ task.state }}
-                </p>
-                
-                <p>
-                    {{ task.priority }}
-                </p>
+                <span class="d-block">
+                    <p class="d-inline fw-bold">Long description: </p>
+                    <p class="d-inline">{{ task.longDescription }}</p>
+                </span>
+
+                <span class="d-block">
+                    <p class="d-inline fw-bold">Category: </p>
+                    <p class="d-inline">{{ task.category }}</p>
+                </span>
+
+                <span class="d-block">
+                    <p class="d-inline fw-bold">State: </p>
+                    <p class="d-inline">{{ task.state }}</p>
+                </span>
+
+                <span class="d-block">
+                    <p class="d-inline fw-bold">Priority: </p>
+                    <p class="d-inline">{{ task.priority }}</p>
+                </span>
+
+                <span class="d-block">
+                    <p class="d-inline fw-bold">Files: </p>
+                    <p class="d-inline">
+                        <ul>
+                            {% for file in files %}
+                                <li>
+                                    {{ file.name }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </p>
+                </span>
             </div>
-            <div class="col-4">
+            <div class="col-3">
                 <a href="{% url 'taskStateChange' projectId task.id %}">
                     {% if task.state == 'toDo' %}
                         <h2>
@@ -122,36 +140,30 @@
                             Mark as Done
                         </h2>
                     {% endif %}
+                </a>
+                <a href="{% url 'deleteTask' projectId task.id %}">
+                    Delete task
+                </a>
+                <div class="row mt-5">
+                    {% if form.errors %}
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            There was an error with your code...
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">X</button>
+                        </div>
+                            
+                    {% endif %}
+                    <h4>Upload file</h4>
+                    <form action="{% url 'uploadFile' projectId task.id %}" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <form>
+                            {{ form.as_p }}
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
                     
-                    <a href="{% url 'deleteTask' projectId task.id %}">
-                        Delete task
-                    </a>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-    
-    
-    
-    <h1>Upload</h1>
-    
-    {% block content %}
-    {% if form.errors %}
-        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-            There was an error with your code...
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">X</button>
-        </div>
-            
-    {% endif %}
-    
-    <form action="{% url 'uploadFile' projectId task.id %}" method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        <form>
-            {{ form.as_p }}
-            <br>
-            <button type="submit" class="btn btn-primary">Submit</button>
-          </form>
-    
-    </form>
-    {% endblock %}
 </body>
 </html>
