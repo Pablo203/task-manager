@@ -61,10 +61,22 @@
           </ul>
           <ul class="nav navbar-nav navbar-right">
             {% if user.is_authenticated %}
-            <li><a href="{% url 'logout_user' %}"><span class="glyphicon glyphicon-log-out"></span> Log out</a></li>
+            <li class="nav-item">
+                <a href="{% url 'logout_user' %}"  class="nav-link">
+                    Log out
+                </a>
+            </li>
             {% else %}
-            <li><a href="{% url 'register_user' %}"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-            <li><a href="{% url 'login_user' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            <li class="nav-item">
+                <a href="{% url 'register_user' %}" class="nav-link">
+                    Sign Up
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'login_user' %}" class="nav-link">
+                    Login
+                </a>
+            </li>
             {% endif %}
           </ul>
         </div>
