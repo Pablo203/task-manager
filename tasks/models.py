@@ -40,3 +40,15 @@ class Task(models.Model):
     def __str__(self):
         return self.name
 
+class File(models.Model):
+    name = models.CharField(max_length=100, default='')
+    createdBy = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        default=1
+    )
+    originTask = models.ForeignKey(Task, on_delete=models.CASCADE)
+    localisation = models.CharField(max_length=200, default='')
+
+    def __str__(self):
+        return self.name
