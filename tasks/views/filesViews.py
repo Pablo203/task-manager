@@ -13,7 +13,7 @@ def handle_uploaded_file(f, taskId):
     task.filePath += task.filePath + ' G:\getFiles\%s' % name
     task.save()
 
-def uploadFile(request, taskId):
+def uploadFile(request, projectId, taskId):
     if request.method == "POST":
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
@@ -21,4 +21,4 @@ def uploadFile(request, taskId):
             return HttpResponse("SUCCESS")
     else:
         form = UploadFileForm()
-    return render(request, 'upload.html', {'form': form})
+    return render(request, 'upload.html', {'form': form, 'projectId': projectId})

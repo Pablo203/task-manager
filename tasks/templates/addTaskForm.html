@@ -1,21 +1,6 @@
-<form action="{% url 'addTaskExecute' %}" method="POST">
+<form action="{% url 'addTaskExecute' projectId %}" method="POST">
     {% csrf_token %}
-    <!-- <label for="name"></label><br>
-    <input id="name" type="text" name="name" value=""><br>
-    <label for="shortDesc"></label><br>
-    <input id="shortDesc" type="text" name="shortDesc" value=""><br>
-    <label for="longDesc"></label><br>
-    <input id="longDesc" type="text" name="longDesc" value=""><br>
-    <label for="category"></label><br>
-    <input id="category" type="text" name="category" value=""><br>
-    <label for="state"></label><br>
-    <select id="state" type="state" name="state" value="">
-        <option value="todo">To do</option>
-        <option value="inprogress">In progress</option>
-        <option value="done">Done</option>
-    </select><br>
-    <label for=""></label><br>
-    <input id="" type="" name="" value=""><br> -->
+
     {{ form }}
     <input type="submit" value="Dodaj">
 </form>
