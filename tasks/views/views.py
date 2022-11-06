@@ -78,3 +78,18 @@ def taskStateChange(request, projectId, taskId):
 
     return HttpResponseRedirect(reverse('tasksKanban', kwargs={'projectId': projectId}))
 
+def openTaskConfirm(request, projectId, taskId):
+    projects = Project.objects.filter(createdBy=request.user)
+    project = Project.objects.get(id=projectId)
+    task = Task.objects.get(id=taskId)
+
+    return render(request, 'deleteTaskConfirm.html', {'project': project, 'task': task, 'projects': projects})
+
+def openFileConfirm(request, projectId, taskId, fileName):
+    projects = Project.objects.filter(createdBy=request.user)
+    project = Project.objects.get(id=projectId)
+    task = Task.objects.get(id=taskId)
+    file = File.objects.get(name=fileName)
+
+    return render(request, 'deleteFileConfirm.html', {'project': project, 'task': task, 'file': file, 'projects': projects})
+    
