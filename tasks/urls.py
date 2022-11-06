@@ -23,5 +23,6 @@ urlpatterns = [
     path('tasksList/<int:projectId>/addTask/', views.addTask, name='addTask'),
     path('tasksList/<int:projectId>/addTaskExecute/', views.addTaskExecute, name='addTaskExecute'),
 
-    path('tasksList/<int:projectId>/taskDetail/<int:taskId>/upload/', filesViews.uploadFile, name='uploadFile')
+    path('tasksList/<int:projectId>/taskDetail/<int:taskId>/upload/', filesViews.uploadFile, name='uploadFile'),
+    path('tasksList/<int:projectId>/taskDetail/<int:taskId>/<str:fileName>/', filesViews.deleteFile, name='deleteFile')
 ]

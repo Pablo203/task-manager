@@ -36,3 +36,9 @@ def uploadFile(request, projectId, taskId):
     else:
         form = UploadFileForm()
     return render(request, 'upload.html', {'form': form, 'projectId': projectId})
+
+def deleteFile(request, projectId, taskId, fileName):
+    file = File.objects.get(name=fileName, originTask=taskId)
+    file.delete()
+
+    return HttpResponseRedirect(reverse('taskDetail', kwargs={'projectId': projectId, 'taskId': taskId}))
