@@ -23,6 +23,8 @@ urlpatterns = [
     path('taskList<int:projectId>/taskDetail/<int:taskId>/taskStateChange/', views.taskStateChange, name='taskStateChange'),
 
     path('tasksList/<int:projectId>/taskDetail/<int:taskId>/taskConfirm/', views.openTaskConfirm, name='openTaskConfirm'),
+    path('taskList/<int:projectId>/taskDetail/<int:taskId>/editTask/', views.editTask, name='editTask'),
+    path('taskList/<int:projectId>/taskDetail/<int:taskId>/editTaskExecute/', views.editTaskExecute, name='editTaskExecute'),
     path('taskList/<int:projectId>/taskDetail/<int:taskId>/deleteTask/', views.deleteTask, name='deleteTask'),
 
     path('tasksList/<int:projectId>/taskDetail/<int:taskId>/upload/', filesViews.uploadFile, name='uploadFile'),

@@ -91,6 +91,36 @@ def deleteTask(request, projectId, taskId):
     task.delete()
     return HttpResponseRedirect(reverse('tasksKanban', kwargs={'projectId': projectId}))
 
+def editTask(request, projectId, taskId):
+    #project = Project.objects.get(id=projectId)
+    task = Task.objects.get(id=taskId)
+    form = TaskCreateForm(initial={
+        'name': task.name,
+        'shortDescription': task.shortDescription,
+        'longDescription': task.longDescription,
+        'category': task.category,
+        'state': task.state,
+        'priority': task.priority,
+    })
+    return render(request, 'editTask.html', {'form': form, 'projectId': projectId, 'taskId': taskId})
+
+def editTaskExecute(request, projectId, taskId):
+    if request.method == "POST":
+        form = TaskCreateForm(request.POST)
+        task = Task.objects.get(id=taskId)
+        if form.is_valid():
+            task.name = form.cleaned_data['name']
+            task.shortDescription = form.cleaned_data['shortDescription']
+            task.longDescription = form.cleaned_data['longDescription']
+            task.category = form.cleaned_data['category']
+            task.state = form.cleaned_data['state']
+            task.priority = form.cleaned_data['priority']
+            task.save()
+    return HttpResponseRedirect(reverse('taskDetail', kwargs={'projectId': projectId, 'taskId': taskId}))
+    
+
+
+
 def taskStateChange(request, projectId, taskId):
     task = Task.objects.get(id=taskId)
     if task.state == 'toDo':
