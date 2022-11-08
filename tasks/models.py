@@ -50,5 +50,8 @@ class File(models.Model):
     originTask = models.ForeignKey(Task, on_delete=models.CASCADE)
     localisation = models.CharField(max_length=200, default='')
 
+    # stateOptions = models.TextChoices('state', 'toDo inProgress done')
+    # state = models.CharField(blank=True, max_length=10, choices=stateOptions.choices)
+
     def __str__(self):
         return self.name

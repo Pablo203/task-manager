@@ -2,7 +2,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from ..models import Task, Project, File
-from ..forms import TaskCreateForm, UploadFileForm
+from ..forms import TaskCreateForm, UploadFileForm, ProjectCreateForm
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
@@ -12,7 +12,8 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 def mainPage(request):
     projects = Project.objects.filter(createdBy=request.user)
-    return render(request, 'index.html', {'projects' : projects})
+    tasks = Task.objects.filter(createdBy=request.user)
+    return render(request, 'index.html', {'projects' : projects, 'tasks': tasks})
 
 @login_required
 def tasksKanban(request, projectId):
@@ -59,9 +60,31 @@ def addTaskExecute(request, projectId):
     
     return render(request, 'addTaskForm.html', {'form': form})
 
+def addProjectExecute(request):
+    if request.method == "POST":
+        form = ProjectCreateForm(request.POST)
+
+        if form.is_valid():
+            currentUser = request.user
+            project = Project(
+                name=form.cleaned_data['name'],
+                createdBy = currentUser
+                )
+            project.save()
+            return HttpResponseRedirect(reverse('index'))
+    else:
+        form = ProjectCreateForm()
+    
+    return render(request, 'addProjectForm.html', {'form': form})
+
+
 def addTask(request, projectId):
     form = TaskCreateForm()
     return render(request, 'addTaskForm.html', {'form': form, 'projectId': projectId})
+
+def addProject(request):
+    form = ProjectCreateForm()
+    return render(request, 'addProjectForm.html', {'form': form})
 
 def deleteTask(request, projectId, taskId):
     task = Task.objects.get(id=taskId)

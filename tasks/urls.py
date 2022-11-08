@@ -9,9 +9,12 @@ urlpatterns = [
     path('', views.mainPage, name="index"),
     
     path('tasksList/getTasks/', apiViews.getAll, name='getTasks'),
+    path('tasksList/addProject/', views.addProject, name='addProject'),
+    path('tasksList/addProjectExecute/', views.addProjectExecute, name='addProjectExecute'),
     
     path('tasksList/<int:projectId>/', views.tasksKanban, name='tasksKanban'),
 
+    
     path('tasksList/<int:projectId>/addTask/', views.addTask, name='addTask'),
     path('tasksList/<int:projectId>/addTaskExecute/', views.addTaskExecute, name='addTaskExecute'),
 

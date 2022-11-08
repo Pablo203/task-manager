@@ -16,7 +16,7 @@ def handle_uploaded_file(request, f, taskId):
         name = name,
         createdBy = request.user,
         originTask = task,
-        localisation = 'G:\getFiles\%s' % name
+        localisation = 'G:\getFiles\%s' % name,
     )
     file.save()
 

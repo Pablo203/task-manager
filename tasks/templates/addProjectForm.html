@@ -100,7 +100,7 @@
       <div class="container-fluid">
         <div class="row justify-content-center p-5">
           <div class="col-sm-4">
-            <form action="{% url 'addTaskExecute' projectId %}" method="POST">
+            <form action="{% url 'addProjectExecute' %}" method="POST">
                 {% csrf_token %}
             
                 {{ form }}

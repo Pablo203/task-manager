@@ -87,17 +87,17 @@
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-sm-2 bg-secondary text-light">
+            <div class="col-sm-2 bg-secondary text-light sidemenu">
                 <ul class="nav navbar-nav navbar-right">
                     {% for project in projects %}
                     <li class="nav-item">
-                        <a href="{% url 'tasksKanban' project.id %}"  class="nav-link">
+                        <a href="{% url 'tasksKanban' project.id %}" class="nav-link">
                             {{ project.name }}
                         </a>
                     </li>
                     {% endfor %}
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a href="{% url 'addProject' %}" class="nav-link">
                             <p>
                                 Add new project
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-plus-square" viewBox="0 0 16 16">
@@ -109,6 +109,12 @@
                         </a>
                     </li>
                   </ul>
+            </div>
+            <div class="col-2"></div>
+            <div class="col-3 mt-5">
+              {% for task in tasks %}
+                {{ task.name }}
+              {% endfor %}
             </div>
         </div>
     </div>
