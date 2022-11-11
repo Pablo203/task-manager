@@ -17,7 +17,6 @@ class TaskCreateForm(forms.Form):
     #projectName = forms.CharField()
 
 class UploadFileForm(forms.Form):
-    title = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
     file = forms.FileField()
 
 class ProjectCreateForm(forms.Form):

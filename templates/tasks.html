@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block sidebar %}
+  <li class="nav-item">
+    <a href="{% url 'addTask' projectId %}" class="nav-link collapsed">
+      <button type="button" class="btn btn-primary">
+        Add task
+      </button>
+    </a>
+  </li>
+{% endblock %}
+          
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-3">
+        <h4>
+          <b>
+            To do
+          </b>
+        </h4>
+        {% for task in toDoTasks %}
+        <div class="card info-card">
+          <div class="card-body">
+            <h5 class="card-title">{{ task.name }}</span></h5>
+                <h6>{{ task.shortDescription }}</h6>
+                <a href="{% url 'taskDetail' projectId task.id %}">
+                  Show details
+                </a>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+        
+        <div class="col-sm-3">
+          <h4>
+            <b>
+              In progress
+            </b>
+          </h4>
+          {% for task in inProgressTasks %}
+          <div class="card info-card">
+            <div class="card-body">
+              <h5 class="card-title">{{ task.name }}</span></h5>
+                  <h6>{{ task.shortDescription }}</h6>
+                  <a href="{% url 'taskDetail' projectId task.id %}">
+                    Show details
+                  </a>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+
+        <div class="col-sm-3">
+          <h4>
+            <b>
+              Done
+            </b>
+          </h4>
+          {% for task in doneTasks %}
+          <div class="card info-card">
+            <div class="card-body">
+              <h5 class="card-title">{{ task.name }}</span></h5>
+                  <h6>{{ task.shortDescription }}</h6>
+                  <a href="{% url 'taskDetail' projectId task.id %}">
+                    Show details
+                  </a>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+
+      </div>
+    </div>
+{% endblock %}

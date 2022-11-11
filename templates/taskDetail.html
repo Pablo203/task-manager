@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+    {% block content %}
+    <div class="container-fluid p-5">
+        <div class="row justify-content-center">
+            <div class="col-md-3 grey">
+                <h2>
+                    {{ task.name }}
+                </h2>
+                
+                <span class="d-block">
+                    <p class="d-inline fw-bold">Short description: </p>
+                    <p class="d-inline">{{ task.shortDescription }}</p>
+                </span>
+                
+                <span class="d-block">
+                    <p class="d-inline fw-bold">Long description: </p>
+                    <p class="d-inline">{{ task.longDescription }}</p>
+                </span>
+
+                <span class="d-block">
+                    <p class="d-inline fw-bold">Category: </p>
+                    <p class="d-inline">{{ task.category }}</p>
+                </span>
+
+                <span class="d-block">
+                    <p class="d-inline fw-bold">State: </p>
+                    <p class="d-inline">{{ task.state }}</p>
+                </span>
+
+                <span class="d-block">
+                    <p class="d-inline fw-bold">Priority: </p>
+                    <p class="d-inline">{{ task.priority }}</p>
+                </span>
+
+                <span class="d-block">
+                    <p class="d-inline fw-bold">Files: </p>
+                    <p class="d-inline">
+                        <ul>
+                            {% for file in files %}
+                                <li class="d-flex justify-content-between">
+                                    <p class="d-inline">{{ file.name }}</p>
+                                    <a href="{% url 'deleteFileConfirm' projectId task.id file.name %}">
+                                        <button class="btn btn-danger">
+                                            <svg class="d-inline" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                                                <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+                                            </svg>
+                                        </button>
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </p>
+                </span>
+                <a href="{% url 'editTask' projectId task.id %}">
+                    <button class="btn btn-primary">
+                        Edit
+                    </button>
+                </a>
+            </div>
+            <div class="col-md-3">
+                <a href="{% url 'taskStateChange' projectId task.id %}">
+                    {% if task.state == 'toDo' %}
+                        <h2>
+                            Mark as In Progress
+                        </h2>
+                    {% elif task.state == 'inProgress' %}
+                        <h2>
+                            Mark as Done
+                        </h2>
+                    {% endif %}
+                </a>
+                <a href="{% url 'deleteTaskConfirm' projectId task.id %}">
+                    Delete task
+                </a>
+                <div class="row mt-5">
+                    {% if form.errors %}
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            There was an error with your code...
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">X</button>
+                        </div>
+                            
+                    {% endif %}
+                    <h4>Upload file</h4>
+                    <form action="{% url 'uploadFile' projectId task.id %}" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <form>
+                            {{ form.as_p }}
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock %}

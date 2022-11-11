@@ -1,0 +1,11 @@
+.grey {
+    background-color: lightgray;
+}
+
+.menuLink{
+    color: white;
+}
+
+.menuLink:hover{
+    color: white;
+}

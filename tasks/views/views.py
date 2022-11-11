@@ -10,10 +10,12 @@ from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
+@login_required
 def mainPage(request):
+    user = request.user
     projects = Project.objects.filter(createdBy=request.user)
     tasks = Task.objects.filter(createdBy=request.user)
-    return render(request, 'index.html', {'projects' : projects, 'tasks': tasks})
+    return render(request, 'index.html', {'projects' : projects, 'tasks': tasks, 'user': user})
 
 @login_required
 def tasksKanban(request, projectId):
@@ -82,6 +84,7 @@ def addTask(request, projectId):
     form = TaskCreateForm()
     return render(request, 'addTaskForm.html', {'form': form, 'projectId': projectId})
 
+@login_required
 def addProject(request):
     form = ProjectCreateForm()
     return render(request, 'addProjectForm.html', {'form': form})
@@ -131,14 +134,14 @@ def taskStateChange(request, projectId, taskId):
 
     return HttpResponseRedirect(reverse('tasksKanban', kwargs={'projectId': projectId}))
 
-def openTaskConfirm(request, projectId, taskId):
+def deleteTaskConfirm(request, projectId, taskId):
     projects = Project.objects.filter(createdBy=request.user)
     project = Project.objects.get(id=projectId)
     task = Task.objects.get(id=taskId)
 
     return render(request, 'deleteTaskConfirm.html', {'project': project, 'task': task, 'projects': projects})
 
-def openFileConfirm(request, projectId, taskId, fileName):
+def deleteFileConfirm(request, projectId, taskId, fileName):
     projects = Project.objects.filter(createdBy=request.user)
     project = Project.objects.get(id=projectId)
     task = Task.objects.get(id=taskId)
