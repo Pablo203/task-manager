@@ -3,9 +3,6 @@ from django.shortcuts import render
 from django.urls import reverse
 from ..models import Task, Project, File
 from ..forms import TaskCreateForm, UploadFileForm, ProjectCreateForm
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from rest_framework import status
 from django.contrib.auth.decorators import login_required
 
 
@@ -47,8 +44,8 @@ def addTaskExecute(request, projectId):
             currentProject = Project.objects.get(id=projectId)
             #currentUserId = currentUser.id
             task = Task(
-                name=form.cleaned_data['name'], shortDescription=form.cleaned_data['shortDescription'], 
-                longDescription=form.cleaned_data['longDescription'], 
+                name=form.cleaned_data['name'],
+                description=form.cleaned_data['description'], 
                 category=form.cleaned_data['category'],
                 state=form.cleaned_data['state'],
                 priority=form.cleaned_data['priority'],
@@ -99,8 +96,7 @@ def editTask(request, projectId, taskId):
     task = Task.objects.get(id=taskId)
     form = TaskCreateForm(initial={
         'name': task.name,
-        'shortDescription': task.shortDescription,
-        'longDescription': task.longDescription,
+        'description': task.description,
         'category': task.category,
         'state': task.state,
         'priority': task.priority,
@@ -113,8 +109,7 @@ def editTaskExecute(request, projectId, taskId):
         task = Task.objects.get(id=taskId)
         if form.is_valid():
             task.name = form.cleaned_data['name']
-            task.shortDescription = form.cleaned_data['shortDescription']
-            task.longDescription = form.cleaned_data['longDescription']
+            task.description = form.cleaned_data['description']
             task.category = form.cleaned_data['category']
             task.state = form.cleaned_data['state']
             task.priority = form.cleaned_data['priority']

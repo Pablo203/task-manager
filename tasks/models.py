@@ -18,8 +18,7 @@ class Project(models.Model):
 
 class Task(models.Model):
     name = models.CharField(max_length=100)
-    shortDescription = models.CharField(max_length=100)
-    longDescription = models.CharField(max_length=500)
+    description = models.CharField(max_length=200, default='')
 
     category = models.CharField(max_length=50)
 
