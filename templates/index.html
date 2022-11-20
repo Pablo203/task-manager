@@ -5,6 +5,44 @@ Dashboard
 {% endblock %}
 
 {% block content %}
+    <div class="col-lg-6">
+
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Most recent tasks</h5>
+
+            <!-- Table with stripped rows -->
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">Name</th>
+                  <th scope="col">Description</th>
+                  <th scope="col">Category</th>
+                  <th scope="col">State</th>
+                  <th scope="col">Priority</th>
+                  <th scope="col">Project</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for task in tasks %}
+                        <tr>                           
+                            <td>
+                                <a href="{% url 'taskDetail' task.projectId task.id %}">
+                                    {{ task.name }}
+                                </a>
+                            </td>
+                            <td>{{ task.description }}</td>
+                            <td>{{ task.category }}</td>
+                            <td>{{ task.state }}</td>
+                            <td>{{ task.priority }}</td>
+                            <td>{{ task.projectName }}</td>
+                        </tr>   
+                {% endfor %}
+              </tbody>
+            </table>
+            <!-- End Table with stripped rows -->
+          </div>
+        </div>
 {% endblock %}
 
 {% block sidebar %}

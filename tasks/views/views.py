@@ -12,6 +12,8 @@ def mainPage(request):
     user = request.user
     projects = Project.objects.filter(createdBy=request.user)
     tasks = Task.objects.filter(createdBy=request.user)
+    
+
     return render(request, 'index.html', {'projects' : projects, 'tasks': tasks, 'user': user})
 
 @login_required
@@ -19,9 +21,9 @@ def tasksKanban(request, projectId):
     currentUser = request.user
     projects = Project.objects.filter(createdBy=request.user)
 
-    toDoTasks = Task.objects.filter(state="toDo", createdBy=currentUser, projectName=projectId).order_by("-priority")
-    inProgressTasks = Task.objects.filter(state="inProgress", createdBy=currentUser, projectName=projectId).order_by("-priority")
-    doneTasks = Task.objects.filter(state="done", createdBy=currentUser, projectName=projectId).order_by("-priority")
+    toDoTasks = Task.objects.filter(state="toDo", createdBy=currentUser, projectId=projectId).order_by("-priority")
+    inProgressTasks = Task.objects.filter(state="inProgress", createdBy=currentUser, projectId=projectId).order_by("-priority")
+    doneTasks = Task.objects.filter(state="done", createdBy=currentUser, projectId=projectId).order_by("-priority")
     
     return render(request, 'tasks.html', {'toDoTasks': toDoTasks, 'inProgressTasks': inProgressTasks, 'doneTasks': doneTasks, 'projectId': projectId, 'projects' : projects})
 
@@ -42,7 +44,6 @@ def addTaskExecute(request, projectId):
         if form.is_valid():
             currentUser = request.user
             currentProject = Project.objects.get(id=projectId)
-            #currentUserId = currentUser.id
             task = Task(
                 name=form.cleaned_data['name'],
                 description=form.cleaned_data['description'], 
@@ -50,7 +51,8 @@ def addTaskExecute(request, projectId):
                 state=form.cleaned_data['state'],
                 priority=form.cleaned_data['priority'],
                 createdBy=currentUser,
-                projectName = currentProject
+                projectName = currentProject,
+                projectId = currentProject.id
                 )
             task.save()
             return HttpResponseRedirect(reverse('tasksKanban', kwargs={'projectId': projectId}))

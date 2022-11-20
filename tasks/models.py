@@ -1,7 +1,6 @@
-from email.policy import default
-from unittest.util import _MAX_LENGTH
 from django.db import models
 from django.conf import settings
+from datetime import datetime
 
 # Create your models here.
 
@@ -32,10 +31,9 @@ class Task(models.Model):
         default=1
     )
 
-    filePath = models.CharField(max_length=500, default='')
-
-    projectName = models.ForeignKey(Project, on_delete=models.CASCADE)
-
+    projectName = models.ForeignKey(Project, on_delete=models.CASCADE, default='')
+    projectId = models.IntegerField(editable=False)
+    
     def __str__(self):
         return self.name
 
