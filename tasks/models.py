@@ -1,6 +1,5 @@
 from django.db import models
 from django.conf import settings
-from datetime import datetime
 
 # Create your models here.
 
@@ -34,21 +33,5 @@ class Task(models.Model):
     projectName = models.ForeignKey(Project, on_delete=models.CASCADE, default='')
     projectId = models.IntegerField(editable=False)
     
-    def __str__(self):
-        return self.name
-
-class File(models.Model):
-    name = models.CharField(max_length=100, default='')
-    createdBy = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        default=1
-    )
-    originTask = models.ForeignKey(Task, on_delete=models.CASCADE)
-    localisation = models.CharField(max_length=200, default='')
-
-    # stateOptions = models.TextChoices('state', 'toDo inProgress done')
-    # state = models.CharField(blank=True, max_length=10, choices=stateOptions.choices)
-
     def __str__(self):
         return self.name

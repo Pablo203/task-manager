@@ -1,11 +1,12 @@
-from ..models import Task, Project
-from files.models import File
-from ..forms import UploadFileForm
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
+from .models import File
+from django.contrib.auth.decorators import login_required
+from tasks.models import Project, Task
+from .forms import UploadFileForm
 from django.contrib.auth.decorators import user_passes_test
-#from django.core.mail import send_mail
+
 
 def handle_uploaded_file(request, f, taskId):
     name = f.name
@@ -52,3 +53,11 @@ def showFiles(request):
     tasks = Task.objects.filter(createdBy=request.user)
     files = File.objects.all()
     return  render(request, 'filesManage.html', {'projects' : projects, 'tasks': tasks, 'user': user})
+
+def deleteFileConfirm(request, projectId, taskId, fileName):
+    projects = Project.objects.filter(createdBy=request.user)
+    project = Project.objects.get(id=projectId)
+    task = Task.objects.get(id=taskId)
+    file = File.objects.get(name=fileName)
+
+    return render(request, 'deleteFileConfirm.html', {'project': project, 'task': task, 'file': file, 'projects': projects})

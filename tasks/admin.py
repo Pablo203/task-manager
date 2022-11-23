@@ -1,7 +1,6 @@
 from django.contrib import admin
-from .models import Task, Project, File
+from .models import Task, Project
 
 # Register your models here.
 admin.site.register(Task)
 admin.site.register(Project)
-admin.site.register(File)

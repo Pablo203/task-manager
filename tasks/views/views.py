@@ -1,9 +1,10 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-from ..models import Task, Project, File
+from ..models import Task, Project
 from ..forms import TaskCreateForm, UploadFileForm, ProjectCreateForm
 from django.contrib.auth.decorators import login_required
+from files.models import File
 
 
 # Create your views here.
@@ -138,11 +139,5 @@ def deleteTaskConfirm(request, projectId, taskId):
 
     return render(request, 'deleteTaskConfirm.html', {'project': project, 'task': task, 'projects': projects})
 
-def deleteFileConfirm(request, projectId, taskId, fileName):
-    projects = Project.objects.filter(createdBy=request.user)
-    project = Project.objects.get(id=projectId)
-    task = Task.objects.get(id=taskId)
-    file = File.objects.get(name=fileName)
 
-    return render(request, 'deleteFileConfirm.html', {'project': project, 'task': task, 'file': file, 'projects': projects})
     

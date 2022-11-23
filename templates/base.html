@@ -242,9 +242,18 @@
                 </p>
                 
             </a>
-        </li>
+          </li>
         </ul>
-      </li><!-- End Components Nav -->
+      </li>
+      <li class="nav-item">
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="{% url 'showFiles' %}">
+            <i class="bi bi-file-earmark"></i>
+            <span>Blank</span>
+          </a>
+        </li>
+      </li>
+      <!-- End Components Nav -->
       {% block sidebar %}
       {% endblock %}
     </ul>

@@ -23,10 +23,10 @@ urlpatterns = [
     path('tasksList/<int:projectId>/taskDetail/<int:taskId>/taskConfirm/', views.deleteTaskConfirm, name='deleteTaskConfirm'),
     path('taskList/<int:projectId>/taskDetail/<int:taskId>/deleteTask/', views.deleteTask, name='deleteTask'),
 
-    path('tasksList/<int:projectId>/taskDetail/<int:taskId>/upload/', filesViews.uploadFile, name='uploadFile'),
-    path('tasksList/<int:projectId>/taskDetail/<int:taskId>/<str:fileName>/fileConfirm/', views.deleteFileConfirm, name='deleteFileConfirm'),
-    path('tasksList/<int:projectId>/taskDetail/<int:taskId>/<str:fileName>/fileDelete/', filesViews.deleteFile, name="deleteFile"),
+
 
     path('tasksList/getTasks/', apiViews.getAll, name='getTasks'),
     path('tasksList/<int:taskId>/<str:state>/changeState/', apiViews.changeState, name='changeState'),
+
+
 ]
