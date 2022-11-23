@@ -12,7 +12,6 @@ urlpatterns = [
     path('tasksList/addProjectExecute/', views.addProjectExecute, name='addProjectExecute'),
     #path('tasksList/<int:projectId>/deleteProject/', views.deleteProject, name='deleteProject'),
 
-    path('tasksList/getTasks/', apiViews.getAll, name='getTasks'),
     path('tasksList/<int:projectId>/', views.tasksKanban, name='tasksKanban'),
     path('tasksList/<int:projectId>/addTask/', views.addTask, name='addTask'),
     path('tasksList/<int:projectId>/addTaskExecute/', views.addTaskExecute, name='addTaskExecute'),
@@ -27,4 +26,7 @@ urlpatterns = [
     path('tasksList/<int:projectId>/taskDetail/<int:taskId>/upload/', filesViews.uploadFile, name='uploadFile'),
     path('tasksList/<int:projectId>/taskDetail/<int:taskId>/<str:fileName>/fileConfirm/', views.deleteFileConfirm, name='deleteFileConfirm'),
     path('tasksList/<int:projectId>/taskDetail/<int:taskId>/<str:fileName>/fileDelete/', filesViews.deleteFile, name="deleteFile"),
+
+    path('tasksList/getTasks/', apiViews.getAll, name='getTasks'),
+    path('tasksList/<int:taskId>/<str:state>/changeState/', apiViews.changeState, name='changeState'),
 ]
